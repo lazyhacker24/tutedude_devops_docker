@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+backend:
+build: ./backend
+image: YOUR_DOCKERHUB_USERNAME/flask-backend:latest
+container_name: flask-backend
+restart: unless-stopped
+ports:
+- "5000:5000"
+frontend:
+build: ./frontend
+image: YOUR_DOCKERHUB_USERNAME/express-frontend:latest
+container_name: express-frontend
+restart: unless-stopped
+depends_on:
+- backend
+ports:
+- "3000:3000"
+
+
+# Both services are on the same default network and can talk to each other
