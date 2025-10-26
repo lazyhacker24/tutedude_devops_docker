@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Express -> Flask Form</title>
+</head>
+<body>
+<h1>Contact form (Express frontend → Flask backend)</h1>
+<form id="myForm">
+<label>Name: <input name="name" required /></label><br/>
+<label>Email: <input name="email" type="email" required /></label><br/>
+<label>Message:<br/><textarea name="message" rows="5" cols="40"></textarea></label><br/>
+<button type="submit">Send</button>
+</form>
+
+
+<pre id="result"></pre>
+
+
+<script>
+const BACKEND_URL = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+? 'http://localhost:5000'
+: 'http://backend:5000';
+
+
+document.getElementById('myForm').addEventListener('submit', async (e) => {
+e.preventDefault();
+const form = e.target;
+const data = {
+name: form.name.value,
+email: form.email.value,
+message: form.message.value
+};
+
+
+try {
+const res = await fetch(BACKEND_URL + '/submit', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(data)
+});
+
+
+const json = await res.json();
+document.getElementById('result').textContent = JSON.stringify(json, null, 2);
+} catch (err) {
+document.getElementById('result').textContent = 'Error: ' + err.message;
+}
+});
+</script>
+</body>
+</html>
