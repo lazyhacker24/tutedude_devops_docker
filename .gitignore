@@ -1,0 +1,19 @@
+# node
+frontend/node_modules/
+
+
+# python
+backend/__pycache__/
+*.pyc
+
+
+# editor
+.vscode/
+
+
+# env
+.env
+
+
+# misc
+.DS_Store
